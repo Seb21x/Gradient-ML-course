@@ -11,3 +11,4 @@ ML basics for everyone!
 ## Exercise 3: Image Classification
 - 🎯 **Goal** — Create a neural network that returns what digit is on a picture.
 - 📦 **Libraries** — `numpy`, `matplotlib.pyplot`, `pandas`, `sklearn.model_selection`
+- 📊 **Dataset** — https://www.kaggle.com/datasets/oddrationale/mnist-in-csv
