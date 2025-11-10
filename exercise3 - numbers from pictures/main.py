@@ -116,7 +116,7 @@ for epoch in range(epochs):
     # sprawdzimy sobie zbiór treningowy i walidacyjny, aby wiedzieć, czy model się nie przeucza,
     # jeśli strata na zbiorze treningowym jest dużo niższa od straty na zbiorze walidacyjnym
     # oznacza to, że model zaczyna się przeuczać i gorzej radzi sobie na danych, których nie widział
-    if epoch % 10 == 0 or epoch == epochs - 1:
+    if epoch % 10 == 0:
         # sprawdzamy najpierw treningowy
         hidden_inputs_train = np.dot(x_train, w1) + b1
         hidden_outputs_train = relu(hidden_inputs_train)
@@ -142,7 +142,22 @@ for epoch in range(epochs):
               f"Train acc: {accuracy_train:.4f} | "
               f"Val acc: {accuracy_val:.4f}")
 
-# TESTOWANIE NA LOSOWYM OBRAZKU
+# SPRAWDZENIE NA DANYCH TESTOWYCH
+# forward pass na całym zbiorze testowym
+hidden_inputs_test = np.dot(x_test, w1) + b1
+hidden_outputs_test = relu(hidden_inputs_test)
+final_inputs_test = np.dot(hidden_outputs_test, w2) + b2
+probs_test = softmax(final_inputs_test)
+
+# sprawdzenie wyników
+prediction_test = np.argmax(probs_test, axis=1)
+accuracy_test = np.mean(prediction_test == y_test)
+
+print(f"WYNIK NA ZBIORZE TESTOWYM: {accuracy_test*100:.2f}%")
+
+
+# TESTOWANIE NA LOSOWYM OBRAZKU (for fun :p)
+
 # losowy obrazek ze zbioru testowego
 idx = random.randint(0, len(x_test) - 1)
 test_image = x_test.iloc[idx].values # dane obrazka (wektor 784 liczb)
@@ -152,14 +167,14 @@ true_label = y_test.iloc[idx] # prawdziwa cyfra
 input_data = test_image.reshape(1, 784)
 
 # przepuszczamy przez sieć
-hidden = np.dot(input_data, w1) + b1
-out_hidden = relu(hidden)
-logits = np.dot(out_hidden, w2) + b2
-probabilities = softmax(logits)
+hidden_inputs_single = np.dot(input_data, w1) + b1
+hidden_outputs_single = relu(hidden_inputs_single)
+final_inputs_single = np.dot(hidden_outputs_single, w2) + b2
+probs_single = softmax(final_inputs_single)
 
 # wynik-cyfra z największym prawdopodobieństwem
-predicted_label = np.argmax(probabilities)
-confidence = probabilities[0][predicted_label] * 100 # % pewności sieci
+predicted_label = np.argmax(probs_single)
+confidence = probs_single[0][predicted_label] * 100 # % pewności sieci
 
 # wyświetlenie wyników
 plt.figure(figsize=(4, 4))
