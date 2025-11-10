@@ -8,6 +8,6 @@ ML basics for everyone!
 ## Exercise 2: XOR Logic Gate
 - 🎯 **Goal** — Create a neural network that returns `True` for the XOR condition, and `False` otherwise.
 - 📦 **Libraries** — `numpy`, `matplotlib.pyplot`
-## Exercise 3
+## Exercise 3: Image Classification
 - 🎯 **Goal** — Create a neural network that returns what digit is on a picture.
 - 📦 **Libraries** — `numpy`, `matplotlib.pyplot`, `pandas`, `sklearn.model_selection`
